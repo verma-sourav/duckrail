@@ -1,0 +1,126 @@
+<%= simple_form_for @mock, html: { class: 'mock-form' } do |form| %>
+  <ul class="tabs" data-tab>
+    <li class="tab-title active"><a href="#general">General</a></li>
+    <li class="tab-title"><a href="#response_body">Response body</a></li>
+    <li class="tab-title"><a href="#headers">Headers</a></li>
+    <li class="tab-title"><a href="#advanced">Advanced</a></li>
+  </ul>
+
+  <div class="tabs-content">
+    <div class="content active" id="general">
+      <p><%= t :general_tab_header  %></p>
+
+      <div class="row">
+        <div class="small-12 medium-10 columns">
+          <%= form.input :name, hint: t(:field_name_hint) %>
+        </div>
+
+        <div class="small-12 medium-2 columns text-right">
+          <label>&nbsp;</label>
+          <%= form.input :active, hint: t(:field_active_hint), wrapper_html: { class: 'checkbox-wrapper' } %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="small-12 columns">
+          <%= form.input :description, input_html: { class: 'short' }, hint: t(:field_description_hint) %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="small-12 medium-6 columns">
+          <%= form.input :request_method, collection: Duckrails::Router::METHODS, hint: t(:field_request_method_hint) %>
+        </div>
+
+        <div class="small-12 medium-6 columns">
+          <%= form.input :status, hint: t(:field_status_hint) %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="small-12 columns">
+          <%= form.input :route_path, hint: t(:field_route_path_hint) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="content" id="response_body">
+      <p><%= t :response_body_tab_header %></p>
+
+      <div class="row">
+        <div class="small-12 medium-6 columns">
+          <%= form.input :body_type, collection: available_script_types, include_blank: true, hint: t(:field_body_type_hint) %>
+        </div>
+
+        <div class="small-12 medium-6 columns">
+          <%= form.input :content_type, collection: available_mime_types, include_blank: true, hint: t(:field_content_type_hint) %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="small-12 columns">
+          <%= form.input :body_content, input_html: { class: 'tall' }, hint: t(:field_body_content_hint) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="content" id="headers">
+      <div class="right">
+        <%= link_to_add_association form,
+                                    :headers,
+                                    title: t(:add_header_link_title),
+                                    data: {
+                                      association_insertion_method: 'append',
+                                      association_insertion_node: '.mock-headers'
+                                      } do %>
+          <i class="fa fa-plus"></i>
+          <span><%= t(:add_header) %></span>
+          <% end %>
+      </div>
+      <p><%= t :headers_tab_header %></p>
+
+      <div class="row">
+        <div class="small-12 columns mock-headers">
+          <%= form.simple_fields_for :headers do |header_fields| %>
+            <%= render partial: 'header_fields', locals: { f: header_fields } %>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="content" id="advanced">
+      <p><%= t :advanced_tab_header %></p>
+
+      <div class="row">
+        <div class="small-12 medium-6 columns">
+          <%= form.input :script_type, collection: available_script_types, include_blank: true, hint: t(:field_script_type_hint) %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="small-12 columns">
+          <%= form.input :script, input_html: { class: 'tall' }, hint: t(:field_script_hint) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 medium-4 columns">
+      <% if @mock.new_record? %>
+        &nbsp;
+      <% else %>
+        <%= link_to(t(:delete), duckrails_mock_path(@mock), method: :delete, class: 'button alert expand', data: { confirm: t(:mock_deletion_confirmation) }) %>
+      <% end %>
+    </div>
+
+    <div class="small-12 medium-4 columns">
+      <%= link_to t(:cancel), duckrails_mocks_path, class: 'button secondary expand' %>
+    </div>
+
+    <div class="small-12 medium-4 columns end">
+      <%= form.submit t(:save), class: 'button expand' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,37 @@
+<% title t(:change_mocks_order) %>
+
+<h1><%= t :change_mocks_order %></h1>
+
+<p class="page-guide">
+  <%= t :mocks_sort_index_page_guide %>
+</p>
+
+<%= content_tag :div,
+                class: 'sortable',
+                data: {
+                  mock_url: update_order_duckrails_mocks_path,
+                  mock_method: :put,
+                  mock_success_url: duckrails_mocks_path
+                } do %>
+    <% @mocks.each do |mock| %>
+      <%= content_tag :div, data: { mock_id: mock.id, old_pos: mock.mock_order }, class: 'mock' do %>
+        <div class="left mock-name">
+          <%= mock.name %>
+        </div>
+
+        <div class="right mock-path">
+          <%= mock.route_path %>
+        </div>
+
+        <div class="right mock-request-method">
+          <%= mock.request_method %>
+        </div>
+      <% end %>
+    <% end %>
+<% end %>
+
+<div class="page-actions">
+  <%= link_to t(:cancel), duckrails_mocks_path, class: 'button secondary' %>
+
+  <%= link_to t(:save), '#', class: 'button success update-mocks-order' %>
+</div>
