@@ -96,3 +96,274 @@ I, [2018-02-07T22:46:05.723469 #16872]  INFO -- :   Rendered duckrails/mocks/ind
 I, [2018-02-07T22:46:05.733535 #16872]  INFO -- :   Rendered shared/_header.html.erb (0.8ms)
 I, [2018-02-07T22:46:05.734806 #16872]  INFO -- :   Rendered shared/_footer.html.erb (0.2ms)
 I, [2018-02-07T22:46:05.735097 #16872]  INFO -- : Completed 200 OK in 30ms (Views: 28.7ms | ActiveRecord: 0.4ms)
+D, [2018-02-07T23:02:18.805588 #17571] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-07T23:02:18.822455 #17571] DEBUG -- :   [1m[35m (0.5ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-07T23:02:19.031313 #17571] DEBUG -- :   [1m[36mSQL (0.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+D, [2018-02-07T23:02:19.040674 #17571] DEBUG -- :   [1m[35m (6.3ms)[0m  DROP TABLE "application_state" CASCADE
+D, [2018-02-07T23:02:19.051163 #17571] DEBUG -- :   [1m[36m (9.8ms)[0m  [1mCREATE TABLE "application_state" ("id" serial primary key, "singleton_guard" integer DEFAULT 0, "mock_synchronization_token" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+D, [2018-02-07T23:02:19.055542 #17571] DEBUG -- :   [1m[35m (2.2ms)[0m  CREATE UNIQUE INDEX  "index_application_state_on_singleton_guard" ON "application_state" USING btree ("singleton_guard")
+D, [2018-02-07T23:02:19.058361 #17571] DEBUG -- :   [1m[36m (1.8ms)[0m  [1mDROP TABLE "headers" CASCADE[0m
+D, [2018-02-07T23:02:19.066236 #17571] DEBUG -- :   [1m[35m (7.7ms)[0m  CREATE TABLE "headers" ("id" serial primary key, "name" character varying NOT NULL, "value" character varying NOT NULL, "mock_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+D, [2018-02-07T23:02:19.069942 #17571] DEBUG -- :   [1m[36m (1.9ms)[0m  [1mCREATE  INDEX  "index_headers_on_mock_id" ON "headers" USING btree ("mock_id")[0m
+D, [2018-02-07T23:02:19.072293 #17571] DEBUG -- :   [1m[35m (1.5ms)[0m  DROP TABLE "mocks" CASCADE
+D, [2018-02-07T23:02:19.080782 #17571] DEBUG -- :   [1m[36m (7.8ms)[0m  [1mCREATE TABLE "mocks" ("id" serial primary key, "name" character varying NOT NULL, "description" text, "status" integer NOT NULL, "content_type" character varying NOT NULL, "request_method" character varying NOT NULL, "route_path" character varying NOT NULL, "body_type" character varying, "body_content" text, "script_type" character varying, "script" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "active" boolean DEFAULT 't' NOT NULL, "mock_order" integer NOT NULL) [0m
+D, [2018-02-07T23:02:19.084278 #17571] DEBUG -- :   [1m[35m (1.9ms)[0m  CREATE UNIQUE INDEX  "index_mocks_on_name" ON "mocks" USING btree ("name")
+D, [2018-02-07T23:02:19.086300 #17571] DEBUG -- :   [1m[36m (1.6ms)[0m  [1mALTER TABLE "headers" ADD CONSTRAINT "fk_rails_f695ccc233"
+FOREIGN KEY ("mock_id")
+  REFERENCES "mocks" ("id")
+ ON DELETE CASCADE[0m
+D, [2018-02-07T23:02:19.087728 #17571] DEBUG -- :   [1m[35m (0.5ms)[0m  SELECT version FROM "schema_migrations"
+D, [2018-02-07T23:02:19.101197 #17571] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-07T23:02:34.110743 #17580] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-07T23:02:34.110876 #17579] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-07T23:02:34.127894 #17580] DEBUG -- :   [1m[35m (0.8ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-07T23:02:34.128082 #17579] DEBUG -- :   [1m[35m (0.7ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-07T23:02:38.679292 #17578] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-07T23:02:38.697164 #17578] DEBUG -- :   [1m[35m (0.6ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+I, [2018-02-07T23:03:42.358343 #17580]  INFO -- : Started GET "/" for 127.0.0.1 at 2018-02-07 23:03:42 +0530
+D, [2018-02-07T23:03:42.360012 #17580] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.6ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+D, [2018-02-07T23:03:42.366480 #17580] DEBUG -- :   [1m[35m (0.1ms)[0m  BEGIN
+D, [2018-02-07T23:03:42.369045 #17580] DEBUG -- :   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "application_state" ("mock_synchronization_token", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["mock_synchronization_token", "54da3404-2dbf-4fb8-9569-ccfa5863b451"], ["created_at", "2018-02-07 17:33:42.366870"], ["updated_at", "2018-02-07 17:33:42.366870"]]
+D, [2018-02-07T23:03:42.375909 #17580] DEBUG -- :   [1m[35m (6.2ms)[0m  COMMIT
+I, [2018-02-07T23:03:42.376167 #17580]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-07T23:03:42.377163 #17580] DEBUG -- :   [1m[36m (0.3ms)[0m  [1mSELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC[0m
+I, [2018-02-07T23:03:42.387744 #17580]  INFO -- : Mock synchronization completed.
+I, [2018-02-07T23:03:42.390171 #17580]  INFO -- : Processing by Duckrails::HomeController#index as HTML
+I, [2018-02-07T23:03:42.404198 #17580]  INFO -- :   Rendered duckrails/home/index.html.erb within layouts/application (6.7ms)
+I, [2018-02-07T23:03:42.413193 #17580]  INFO -- :   Rendered shared/_header.html.erb (0.5ms)
+I, [2018-02-07T23:03:42.414532 #17580]  INFO -- :   Rendered shared/_footer.html.erb (0.2ms)
+I, [2018-02-07T23:03:42.414809 #17580]  INFO -- : Completed 200 OK in 24ms (Views: 24.3ms | ActiveRecord: 0.0ms)
+I, [2018-02-07T23:03:44.473358 #17578]  INFO -- : Started GET "/duckrails/mocks/new" for 127.0.0.1 at 2018-02-07 23:03:44 +0530
+D, [2018-02-07T23:03:44.475311 #17578] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.7ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-07T23:03:44.481468 #17578]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-07T23:03:44.482206 #17578] DEBUG -- :   [1m[35m (0.2ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+I, [2018-02-07T23:03:44.491446 #17578]  INFO -- : Mock synchronization completed.
+I, [2018-02-07T23:03:44.493930 #17578]  INFO -- : Processing by Duckrails::MocksController#new as HTML
+I, [2018-02-07T23:03:44.558801 #17578]  INFO -- :   Rendered duckrails/mocks/_header_fields.html.erb (2.3ms)
+I, [2018-02-07T23:03:44.569109 #17578]  INFO -- :   Rendered duckrails/mocks/_form.html.erb (52.4ms)
+I, [2018-02-07T23:03:44.569563 #17578]  INFO -- :   Rendered duckrails/mocks/new.html.erb within layouts/application (58.3ms)
+I, [2018-02-07T23:03:44.573243 #17578]  INFO -- :   Rendered shared/_header.html.erb (0.9ms)
+I, [2018-02-07T23:03:44.574961 #17578]  INFO -- :   Rendered shared/_footer.html.erb (0.3ms)
+I, [2018-02-07T23:03:44.575340 #17578]  INFO -- : Completed 200 OK in 81ms (Views: 69.6ms | ActiveRecord: 2.0ms)
+I, [2018-02-07T23:03:59.483517 #17578]  INFO -- : Started POST "/duckrails/mocks" for 127.0.0.1 at 2018-02-07 23:03:59 +0530
+D, [2018-02-07T23:03:59.484881 #17578] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.3ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-07T23:03:59.485913 #17578]  INFO -- : Processing by Duckrails::MocksController#create as HTML
+I, [2018-02-07T23:03:59.486151 #17578]  INFO -- :   Parameters: {"utf8"=>"✓", "authenticity_token"=>"0f608yrx0WCELeswNPivVS2opEb6FpBkZf4GNqAThu7ywx0gjvjOnuIE4q/KrKydhQyFO3NtJKo6WkeVIxstOQ==", "duckrails_mock"=>{"name"=>"xyz", "active"=>"1", "description"=>"", "request_method"=>"get", "status"=>"200", "route_path"=>"xyz", "body_type"=>"", "content_type"=>"", "body_content"=>"", "script_type"=>"", "script"=>""}, "commit"=>"Save"}
+D, [2018-02-07T23:03:59.487810 #17578] DEBUG -- :   [1m[35m (0.1ms)[0m  BEGIN
+D, [2018-02-07T23:03:59.533593 #17578] DEBUG -- :   [1m[36mDuckrails::Mock Exists (13.7ms)[0m  [1mSELECT  1 AS one FROM "mocks" WHERE LOWER("mocks"."name") = LOWER('xyz') LIMIT 1[0m
+D, [2018-02-07T23:03:59.534439 #17578] DEBUG -- :   [1m[35m (0.3ms)[0m  ROLLBACK
+I, [2018-02-07T23:03:59.549575 #17578]  INFO -- :   Rendered duckrails/mocks/_header_fields.html.erb (1.6ms)
+I, [2018-02-07T23:03:59.551934 #17578]  INFO -- :   Rendered duckrails/mocks/_form.html.erb (16.1ms)
+I, [2018-02-07T23:03:59.552168 #17578]  INFO -- :   Rendered duckrails/mocks/new.html.erb within layouts/application (16.8ms)
+I, [2018-02-07T23:03:59.553594 #17578]  INFO -- :   Rendered shared/_header.html.erb (0.5ms)
+I, [2018-02-07T23:03:59.554067 #17578]  INFO -- :   Rendered shared/_footer.html.erb (0.1ms)
+I, [2018-02-07T23:03:59.554459 #17578]  INFO -- : Completed 200 OK in 68ms (Views: 19.4ms | ActiveRecord: 14.1ms)
+I, [2018-02-07T23:04:39.617433 #17579]  INFO -- : Started POST "/duckrails/mocks" for 127.0.0.1 at 2018-02-07 23:04:39 +0530
+D, [2018-02-07T23:04:39.619103 #17579] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.6ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-07T23:04:39.625512 #17579]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-07T23:04:39.630497 #17579] DEBUG -- :   [1m[35m (0.3ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+I, [2018-02-07T23:04:39.635752 #17579]  INFO -- : Mock synchronization completed.
+I, [2018-02-07T23:04:39.638866 #17579]  INFO -- : Processing by Duckrails::MocksController#create as HTML
+I, [2018-02-07T23:04:39.639067 #17579]  INFO -- :   Parameters: {"utf8"=>"✓", "authenticity_token"=>"DsGUx+yBbT6+IJy3U//88kwjp+EtTf2IFhApDXzcJg0t/D0USIhywNgJlSitq/865IeGnKQ2SUZJtGiu/9SN2g==", "duckrails_mock"=>{"name"=>"xyz", "active"=>"1", "description"=>"", "request_method"=>"get", "status"=>"200", "route_path"=>"xyz", "body_type"=>"static", "content_type"=>"text/html", "body_content"=>"<h1>Hello World<h1>", "script_type"=>"", "script"=>""}, "commit"=>"Save"}
+D, [2018-02-07T23:04:39.655241 #17579] DEBUG -- :   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+D, [2018-02-07T23:04:39.668921 #17579] DEBUG -- :   [1m[35mDuckrails::Mock Exists (0.4ms)[0m  SELECT  1 AS one FROM "mocks" WHERE LOWER("mocks"."name") = LOWER('xyz') LIMIT 1
+D, [2018-02-07T23:04:39.671396 #17579] DEBUG -- :   [1m[36m (1.8ms)[0m  [1mSELECT MAX("mocks"."mock_order") FROM "mocks"[0m
+D, [2018-02-07T23:04:39.675175 #17579] DEBUG -- :   [1m[35mSQL (0.8ms)[0m  INSERT INTO "mocks" ("name", "description", "status", "body_type", "body_content", "script_type", "script", "request_method", "content_type", "route_path", "mock_order", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING "id"  [["name", "xyz"], ["description", ""], ["status", 200], ["body_type", "static"], ["body_content", "<h1>Hello World<h1>"], ["script_type", ""], ["script", ""], ["request_method", "get"], ["content_type", "text/html"], ["route_path", "xyz"], ["mock_order", 1], ["created_at", "2018-02-07 17:34:39.671676"], ["updated_at", "2018-02-07 17:34:39.671676"]]
+D, [2018-02-07T23:04:39.676727 #17579] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.4ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+D, [2018-02-07T23:04:39.679168 #17579] DEBUG -- :   [1m[35mSQL (0.2ms)[0m  UPDATE "application_state" SET "mock_synchronization_token" = $1, "updated_at" = $2 WHERE "application_state"."id" = $3  [["mock_synchronization_token", "e8d4f2ac-3760-48cd-a645-f107e9355c7e"], ["updated_at", "2018-02-07 17:34:39.677459"], ["id", 1]]
+D, [2018-02-07T23:04:39.680538 #17579] DEBUG -- :   [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+I, [2018-02-07T23:04:39.681077 #17579]  INFO -- : Redirected to http://localhost:9292/duckrails/mocks
+D, [2018-02-07T23:04:39.686450 #17579] DEBUG -- :   [1m[35mDuckrails::Mock Load (0.2ms)[0m  SELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1  [["id", 1]]
+I, [2018-02-07T23:04:39.687573 #17579]  INFO -- : Completed 302 Found in 48ms (ActiveRecord: 5.7ms)
+I, [2018-02-07T23:04:39.692917 #17579]  INFO -- : Started GET "/duckrails/mocks" for 127.0.0.1 at 2018-02-07 23:04:39 +0530
+D, [2018-02-07T23:04:39.694056 #17579] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.2ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-07T23:04:39.694341 #17579]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-07T23:04:39.694974 #17579] DEBUG -- :   [1m[35m (0.2ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-07T23:04:39.699615 #17579] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.3ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+I, [2018-02-07T23:04:39.700685 #17579]  INFO -- : Mock synchronization completed.
+I, [2018-02-07T23:04:39.702972 #17579]  INFO -- : Processing by Duckrails::MocksController#index as HTML
+D, [2018-02-07T23:04:39.719202 #17579] DEBUG -- :   [1m[35mDuckrails::Mock Load (0.3ms)[0m  SELECT  "mocks".* FROM "mocks"  ORDER BY "mocks"."mock_order" ASC LIMIT 10 OFFSET 0
+I, [2018-02-07T23:04:39.723744 #17579]  INFO -- :   Rendered duckrails/mocks/index.html.erb within layouts/application (13.0ms)
+I, [2018-02-07T23:04:39.727514 #17579]  INFO -- :   Rendered shared/_header.html.erb (1.2ms)
+I, [2018-02-07T23:04:39.728944 #17579]  INFO -- :   Rendered shared/_footer.html.erb (0.2ms)
+I, [2018-02-07T23:04:39.729195 #17579]  INFO -- : Completed 200 OK in 26ms (Views: 25.2ms | ActiveRecord: 0.3ms)
+I, [2018-02-07T23:04:45.466280 #17579]  INFO -- : Started GET "/duckrails/mocks" for 127.0.0.1 at 2018-02-07 23:04:45 +0530
+D, [2018-02-07T23:04:45.467525 #17579] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.3ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-07T23:04:45.468433 #17579]  INFO -- : Processing by Duckrails::MocksController#index as HTML
+D, [2018-02-07T23:04:45.469926 #17579] DEBUG -- :   [1m[35mDuckrails::Mock Load (0.4ms)[0m  SELECT  "mocks".* FROM "mocks"  ORDER BY "mocks"."mock_order" ASC LIMIT 10 OFFSET 0
+I, [2018-02-07T23:04:45.471415 #17579]  INFO -- :   Rendered duckrails/mocks/index.html.erb within layouts/application (2.2ms)
+I, [2018-02-07T23:04:45.472538 #17579]  INFO -- :   Rendered shared/_header.html.erb (0.3ms)
+I, [2018-02-07T23:04:45.472806 #17579]  INFO -- :   Rendered shared/_footer.html.erb (0.0ms)
+I, [2018-02-07T23:04:45.473032 #17579]  INFO -- : Completed 200 OK in 4ms (Views: 3.6ms | ActiveRecord: 0.4ms)
+I, [2018-02-07T23:04:55.603018 #17579]  INFO -- : Started GET "/xyz" for 127.0.0.1 at 2018-02-07 23:04:55 +0530
+D, [2018-02-07T23:04:55.604101 #17579] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.3ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-07T23:04:55.604951 #17579]  INFO -- : Processing by Duckrails::MocksController#serve_mock as HTML
+I, [2018-02-07T23:04:55.605113 #17579]  INFO -- :   Parameters: {"duckrails_mock_id"=>1}
+D, [2018-02-07T23:04:55.605994 #17579] DEBUG -- :   [1m[35mDuckrails::Mock Load (0.2ms)[0m  SELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1  [["id", 1]]
+D, [2018-02-07T23:04:55.618004 #17579] DEBUG -- :   [1m[36mDuckrails::Header Load (0.4ms)[0m  [1mSELECT "headers".* FROM "headers" WHERE "headers"."mock_id" = $1[0m  [["mock_id", 1]]
+I, [2018-02-07T23:04:55.618726 #17579]  INFO -- :   Rendered text template (0.0ms)
+I, [2018-02-07T23:04:55.618984 #17579]  INFO -- : Completed 200 OK in 14ms (Views: 0.4ms | ActiveRecord: 1.3ms)
+D, [2018-02-08T11:37:53.050558 #18539] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (12.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-08T11:37:53.084696 #18539] DEBUG -- :   [1m[35m (1.1ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-08T11:37:53.419935 #18539] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.4ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+D, [2018-02-08T11:37:53.449808 #18539] DEBUG -- :   [1m[35mSQL (5.8ms)[0m  CREATE EXTENSION IF NOT EXISTS "plpgsql"
+D, [2018-02-08T11:37:53.467194 #18539] DEBUG -- :   [1m[36m (12.1ms)[0m  [1mDROP TABLE "application_state" CASCADE[0m
+D, [2018-02-08T11:37:53.480867 #18539] DEBUG -- :   [1m[35m (12.8ms)[0m  CREATE TABLE "application_state" ("id" serial primary key, "singleton_guard" integer DEFAULT 0, "mock_synchronization_token" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+D, [2018-02-08T11:37:53.486392 #18539] DEBUG -- :   [1m[36m (2.2ms)[0m  [1mCREATE UNIQUE INDEX  "index_application_state_on_singleton_guard" ON "application_state" USING btree ("singleton_guard")[0m
+D, [2018-02-08T11:37:53.489908 #18539] DEBUG -- :   [1m[35m (1.9ms)[0m  DROP TABLE "headers" CASCADE
+D, [2018-02-08T11:37:53.498464 #18539] DEBUG -- :   [1m[36m (8.3ms)[0m  [1mCREATE TABLE "headers" ("id" serial primary key, "name" character varying NOT NULL, "value" character varying NOT NULL, "mock_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+D, [2018-02-08T11:37:53.502156 #18539] DEBUG -- :   [1m[35m (2.0ms)[0m  CREATE  INDEX  "index_headers_on_mock_id" ON "headers" USING btree ("mock_id")
+D, [2018-02-08T11:37:53.504732 #18539] DEBUG -- :   [1m[36m (1.6ms)[0m  [1mDROP TABLE "mocks" CASCADE[0m
+D, [2018-02-08T11:37:53.512596 #18539] DEBUG -- :   [1m[35m (7.4ms)[0m  CREATE TABLE "mocks" ("id" serial primary key, "name" character varying NOT NULL, "description" text, "status" integer NOT NULL, "content_type" character varying NOT NULL, "request_method" character varying NOT NULL, "route_path" character varying NOT NULL, "body_type" character varying, "body_content" text, "script_type" character varying, "script" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "active" boolean DEFAULT 't' NOT NULL, "mock_order" integer NOT NULL) 
+D, [2018-02-08T11:37:53.516457 #18539] DEBUG -- :   [1m[36m (2.3ms)[0m  [1mCREATE UNIQUE INDEX  "index_mocks_on_name" ON "mocks" USING btree ("name")[0m
+D, [2018-02-08T11:37:53.535760 #18539] DEBUG -- :   [1m[35m (18.4ms)[0m  ALTER TABLE "headers" ADD CONSTRAINT "fk_rails_f695ccc233"
+FOREIGN KEY ("mock_id")
+  REFERENCES "mocks" ("id")
+ ON DELETE CASCADE
+D, [2018-02-08T11:37:53.539493 #18539] DEBUG -- :   [1m[36m (0.7ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+D, [2018-02-08T11:37:53.553821 #18539] DEBUG -- :   [1m[35mActiveRecord::SchemaMigration Load (0.4ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+D, [2018-02-08T11:38:14.506856 #18549] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-08T11:38:14.506853 #18548] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-08T11:38:14.520513 #18547] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-08T11:38:14.522411 #18548] DEBUG -- :   [1m[35m (0.5ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-08T11:38:14.522735 #18549] DEBUG -- :   [1m[35m (0.5ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-08T11:38:14.535567 #18547] DEBUG -- :   [1m[35m (0.6ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+I, [2018-02-08T11:38:24.758778 #18549]  INFO -- : Started GET "/" for 127.0.0.1 at 2018-02-08 11:38:24 +0530
+D, [2018-02-08T11:38:24.760624 #18549] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.7ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+D, [2018-02-08T11:38:24.766866 #18549] DEBUG -- :   [1m[35m (0.1ms)[0m  BEGIN
+D, [2018-02-08T11:38:24.768937 #18549] DEBUG -- :   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "application_state" ("mock_synchronization_token", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["mock_synchronization_token", "2274c2a5-6b2b-4901-abc1-f4470d1a1fb1"], ["created_at", "2018-02-08 06:08:24.767207"], ["updated_at", "2018-02-08 06:08:24.767207"]]
+D, [2018-02-08T11:38:24.775547 #18549] DEBUG -- :   [1m[35m (6.2ms)[0m  COMMIT
+I, [2018-02-08T11:38:24.775843 #18549]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-08T11:38:24.777088 #18549] DEBUG -- :   [1m[36m (0.4ms)[0m  [1mSELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC[0m
+I, [2018-02-08T11:38:24.783785 #18549]  INFO -- : Mock synchronization completed.
+I, [2018-02-08T11:38:24.786656 #18549]  INFO -- : Processing by Duckrails::HomeController#index as HTML
+I, [2018-02-08T11:38:24.805525 #18549]  INFO -- :   Rendered duckrails/home/index.html.erb within layouts/application (8.9ms)
+I, [2018-02-08T11:38:24.817193 #18549]  INFO -- :   Rendered shared/_header.html.erb (1.2ms)
+I, [2018-02-08T11:38:24.819827 #18549]  INFO -- :   Rendered shared/_footer.html.erb (0.3ms)
+I, [2018-02-08T11:38:24.820292 #18549]  INFO -- : Completed 200 OK in 33ms (Views: 33.2ms | ActiveRecord: 0.0ms)
+I, [2018-02-08T11:38:26.323036 #18548]  INFO -- : Started GET "/duckrails/mocks" for 127.0.0.1 at 2018-02-08 11:38:26 +0530
+D, [2018-02-08T11:38:26.325152 #18548] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.7ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-08T11:38:26.330645 #18548]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-08T11:38:26.331369 #18548] DEBUG -- :   [1m[35m (0.2ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+I, [2018-02-08T11:38:26.336143 #18548]  INFO -- : Mock synchronization completed.
+I, [2018-02-08T11:38:26.338910 #18548]  INFO -- : Processing by Duckrails::MocksController#index as HTML
+D, [2018-02-08T11:38:26.360258 #18548] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.4ms)[0m  [1mSELECT  "mocks".* FROM "mocks"  ORDER BY "mocks"."mock_order" ASC LIMIT 10 OFFSET 0[0m
+I, [2018-02-08T11:38:26.361053 #18548]  INFO -- :   Rendered duckrails/mocks/index.html.erb within layouts/application (11.8ms)
+I, [2018-02-08T11:38:26.370526 #18548]  INFO -- :   Rendered shared/_header.html.erb (0.7ms)
+I, [2018-02-08T11:38:26.371787 #18548]  INFO -- :   Rendered shared/_footer.html.erb (0.2ms)
+I, [2018-02-08T11:38:26.372080 #18548]  INFO -- : Completed 200 OK in 33ms (Views: 31.9ms | ActiveRecord: 0.4ms)
+I, [2018-02-08T11:38:31.778183 #18548]  INFO -- : Started GET "/duckrails/mocks/new" for 127.0.0.1 at 2018-02-08 11:38:31 +0530
+D, [2018-02-08T11:38:31.779824 #18548] DEBUG -- :   [1m[35mDuckrails::ApplicationState Load (0.3ms)[0m  SELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1
+I, [2018-02-08T11:38:31.781007 #18548]  INFO -- : Processing by Duckrails::MocksController#new as HTML
+I, [2018-02-08T11:38:31.839955 #18548]  INFO -- :   Rendered duckrails/mocks/_header_fields.html.erb (3.3ms)
+I, [2018-02-08T11:38:31.843398 #18548]  INFO -- :   Rendered duckrails/mocks/_form.html.erb (51.9ms)
+I, [2018-02-08T11:38:31.843640 #18548]  INFO -- :   Rendered duckrails/mocks/new.html.erb within layouts/application (54.1ms)
+I, [2018-02-08T11:38:31.844692 #18548]  INFO -- :   Rendered shared/_header.html.erb (0.4ms)
+I, [2018-02-08T11:38:31.844930 #18548]  INFO -- :   Rendered shared/_footer.html.erb (0.0ms)
+I, [2018-02-08T11:38:31.845210 #18548]  INFO -- : Completed 200 OK in 64ms (Views: 55.6ms | ActiveRecord: 2.0ms)
+I, [2018-02-08T11:38:35.283172 #18548]  INFO -- : Started POST "/duckrails/mocks" for 127.0.0.1 at 2018-02-08 11:38:35 +0530
+D, [2018-02-08T11:38:35.284388 #18548] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.3ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-08T11:38:35.285411 #18548]  INFO -- : Processing by Duckrails::MocksController#create as HTML
+I, [2018-02-08T11:38:35.285591 #18548]  INFO -- :   Parameters: {"utf8"=>"✓", "authenticity_token"=>"BqDtjASsya2n5cYGFMxy8hQ8MA2M+RR8AcIqbWi1xPQlnURfoKXWU8HMz5nqmHE6vJgRcAWCoLJeZmvO671vIw==", "duckrails_mock"=>{"name"=>"xyz", "active"=>"1", "description"=>"", "request_method"=>"", "status"=>"", "route_path"=>"", "body_type"=>"", "content_type"=>"", "body_content"=>"", "script_type"=>"", "script"=>""}, "commit"=>"Save"}
+D, [2018-02-08T11:38:35.287177 #18548] DEBUG -- :   [1m[35m (0.1ms)[0m  BEGIN
+D, [2018-02-08T11:38:35.300687 #18548] DEBUG -- :   [1m[36mDuckrails::Mock Exists (6.8ms)[0m  [1mSELECT  1 AS one FROM "mocks" WHERE LOWER("mocks"."name") = LOWER('xyz') LIMIT 1[0m
+D, [2018-02-08T11:38:35.301420 #18548] DEBUG -- :   [1m[35m (0.2ms)[0m  ROLLBACK
+I, [2018-02-08T11:38:35.315944 #18548]  INFO -- :   Rendered duckrails/mocks/_header_fields.html.erb (1.9ms)
+I, [2018-02-08T11:38:35.318727 #18548]  INFO -- :   Rendered duckrails/mocks/_form.html.erb (16.1ms)
+I, [2018-02-08T11:38:35.318914 #18548]  INFO -- :   Rendered duckrails/mocks/new.html.erb within layouts/application (16.6ms)
+I, [2018-02-08T11:38:35.320098 #18548]  INFO -- :   Rendered shared/_header.html.erb (0.5ms)
+I, [2018-02-08T11:38:35.320399 #18548]  INFO -- :   Rendered shared/_footer.html.erb (0.0ms)
+I, [2018-02-08T11:38:35.320692 #18548]  INFO -- : Completed 200 OK in 35ms (Views: 18.7ms | ActiveRecord: 7.1ms)
+I, [2018-02-08T11:39:17.663604 #18548]  INFO -- : Started POST "/duckrails/mocks" for 127.0.0.1 at 2018-02-08 11:39:17 +0530
+D, [2018-02-08T11:39:17.665550 #18548] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.4ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-08T11:39:17.667028 #18548]  INFO -- : Processing by Duckrails::MocksController#create as HTML
+I, [2018-02-08T11:39:17.667306 #18548]  INFO -- :   Parameters: {"utf8"=>"✓", "authenticity_token"=>"mwAQCTupYg8TkwHhl7b7VQkP2mYhXR9Y1WO7Kl4D+kO4Pbnan6B98XW6CH5p4vidoav7G6gmq5aKx/qJ3QtRlA==", "duckrails_mock"=>{"name"=>"xyz", "active"=>"1", "description"=>"", "request_method"=>"get", "status"=>"200", "route_path"=>"abc", "body_type"=>"static", "content_type"=>"text/html", "body_content"=>"<h1>Hello World<h1>", "script_type"=>"", "script"=>""}, "commit"=>"Save"}
+D, [2018-02-08T11:39:17.669292 #18548] DEBUG -- :   [1m[35m (0.1ms)[0m  BEGIN
+D, [2018-02-08T11:39:17.685354 #18548] DEBUG -- :   [1m[36mDuckrails::Mock Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "mocks" WHERE LOWER("mocks"."name") = LOWER('xyz') LIMIT 1[0m
+D, [2018-02-08T11:39:17.686711 #18548] DEBUG -- :   [1m[35m (0.4ms)[0m  SELECT MAX("mocks"."mock_order") FROM "mocks"
+D, [2018-02-08T11:39:17.690559 #18548] DEBUG -- :   [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "mocks" ("name", "description", "status", "body_type", "body_content", "script_type", "script", "request_method", "content_type", "route_path", "mock_order", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING "id"[0m  [["name", "xyz"], ["description", ""], ["status", 200], ["body_type", "static"], ["body_content", "<h1>Hello World<h1>"], ["script_type", ""], ["script", ""], ["request_method", "get"], ["content_type", "text/html"], ["route_path", "abc"], ["mock_order", 1], ["created_at", "2018-02-08 06:09:17.686968"], ["updated_at", "2018-02-08 06:09:17.686968"]]
+D, [2018-02-08T11:39:17.691595 #18548] DEBUG -- :   [1m[35mDuckrails::ApplicationState Load (0.2ms)[0m  SELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1
+D, [2018-02-08T11:39:17.693987 #18548] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1mUPDATE "application_state" SET "mock_synchronization_token" = $1, "updated_at" = $2 WHERE "application_state"."id" = $3[0m  [["mock_synchronization_token", "89880cc1-90e7-4592-8e45-6f253e33c909"], ["updated_at", "2018-02-08 06:09:17.692125"], ["id", 1]]
+D, [2018-02-08T11:39:17.700862 #18548] DEBUG -- :   [1m[35m (5.7ms)[0m  COMMIT
+I, [2018-02-08T11:39:17.701437 #18548]  INFO -- : Redirected to http://localhost:9292/duckrails/mocks
+D, [2018-02-08T11:39:17.709849 #18548] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.3ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+I, [2018-02-08T11:39:17.711447 #18548]  INFO -- : Completed 302 Found in 44ms (ActiveRecord: 8.5ms)
+I, [2018-02-08T11:39:17.716650 #18548]  INFO -- : Started GET "/duckrails/mocks" for 127.0.0.1 at 2018-02-08 11:39:17 +0530
+D, [2018-02-08T11:39:17.717622 #18548] DEBUG -- :   [1m[35mDuckrails::ApplicationState Load (0.2ms)[0m  SELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1
+I, [2018-02-08T11:39:17.718170 #18548]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-08T11:39:17.718802 #18548] DEBUG -- :   [1m[36m (0.2ms)[0m  [1mSELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC[0m
+D, [2018-02-08T11:39:17.727810 #18548] DEBUG -- :   [1m[35mDuckrails::Mock Load (0.3ms)[0m  SELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1  [["id", 1]]
+I, [2018-02-08T11:39:17.729410 #18548]  INFO -- : Mock synchronization completed.
+I, [2018-02-08T11:39:17.732377 #18548]  INFO -- : Processing by Duckrails::MocksController#index as HTML
+D, [2018-02-08T11:39:17.733932 #18548] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.3ms)[0m  [1mSELECT  "mocks".* FROM "mocks"  ORDER BY "mocks"."mock_order" ASC LIMIT 10 OFFSET 0[0m
+I, [2018-02-08T11:39:17.738992 #18548]  INFO -- :   Rendered duckrails/mocks/index.html.erb within layouts/application (5.9ms)
+I, [2018-02-08T11:39:17.741133 #18548]  INFO -- :   Rendered shared/_header.html.erb (0.8ms)
+I, [2018-02-08T11:39:17.741431 #18548]  INFO -- :   Rendered shared/_footer.html.erb (0.0ms)
+I, [2018-02-08T11:39:17.741695 #18548]  INFO -- : Completed 200 OK in 9ms (Views: 8.5ms | ActiveRecord: 0.3ms)
+I, [2018-02-08T11:39:30.967646 #18548]  INFO -- : Started GET "/abc" for 127.0.0.1 at 2018-02-08 11:39:30 +0530
+D, [2018-02-08T11:39:30.969766 #18548] DEBUG -- :   [1m[35mDuckrails::ApplicationState Load (0.4ms)[0m  SELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1
+I, [2018-02-08T11:39:30.970836 #18548]  INFO -- : Processing by Duckrails::MocksController#serve_mock as HTML
+I, [2018-02-08T11:39:30.971253 #18548]  INFO -- :   Parameters: {"duckrails_mock_id"=>1}
+D, [2018-02-08T11:39:30.972246 #18548] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.3ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+D, [2018-02-08T11:39:30.973859 #18548] DEBUG -- :   [1m[35mDuckrails::Header Load (0.3ms)[0m  SELECT "headers".* FROM "headers" WHERE "headers"."mock_id" = $1  [["mock_id", 1]]
+I, [2018-02-08T11:39:30.974340 #18548]  INFO -- :   Rendered text template (0.0ms)
+I, [2018-02-08T11:39:30.974859 #18548]  INFO -- : Completed 200 OK in 3ms (Views: 0.3ms | ActiveRecord: 0.7ms)
+D, [2018-02-08T11:39:52.969539 #18564] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-08T11:39:52.979075 #18565] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-08T11:39:52.982860 #18563] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-02-08T11:39:52.985768 #18564] DEBUG -- :   [1m[35m (0.6ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-08T11:39:52.994770 #18565] DEBUG -- :   [1m[35m (0.5ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-08T11:39:52.996933 #18563] DEBUG -- :   [1m[35m (0.6ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+D, [2018-02-08T11:39:53.707404 #18564] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.2ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+I, [2018-02-08T11:39:53.723316 #18564]  INFO -- : Started GET "/abc" for 127.0.0.1 at 2018-02-08 11:39:53 +0530
+D, [2018-02-08T11:39:53.727636 #18563] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.2ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+D, [2018-02-08T11:39:53.727637 #18565] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.3ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+D, [2018-02-08T11:39:53.735052 #18564] DEBUG -- :   [1m[35mDuckrails::ApplicationState Load (0.7ms)[0m  SELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1
+I, [2018-02-08T11:39:53.742166 #18564]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-08T11:39:53.743650 #18564] DEBUG -- :   [1m[36m (0.8ms)[0m  [1mSELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC[0m
+D, [2018-02-08T11:39:53.749977 #18564] DEBUG -- :   [1m[35mDuckrails::Mock Load (0.3ms)[0m  SELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1  [["id", 1]]
+I, [2018-02-08T11:39:53.751167 #18564]  INFO -- : Mock synchronization completed.
+I, [2018-02-08T11:39:53.754264 #18564]  INFO -- : Processing by Duckrails::MocksController#serve_mock as HTML
+I, [2018-02-08T11:39:53.754472 #18564]  INFO -- :   Parameters: {"duckrails_mock_id"=>1}
+D, [2018-02-08T11:39:53.755791 #18564] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.3ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+D, [2018-02-08T11:39:53.769983 #18564] DEBUG -- :   [1m[35mDuckrails::Header Load (0.3ms)[0m  SELECT "headers".* FROM "headers" WHERE "headers"."mock_id" = $1  [["mock_id", 1]]
+I, [2018-02-08T11:39:53.772525 #18564]  INFO -- :   Rendered text template (0.0ms)
+I, [2018-02-08T11:39:53.772771 #18564]  INFO -- : Completed 200 OK in 18ms (Views: 2.3ms | ActiveRecord: 2.8ms)
+I, [2018-02-08T11:39:57.909278 #18564]  INFO -- : Started GET "/" for 127.0.0.1 at 2018-02-08 11:39:57 +0530
+D, [2018-02-08T11:39:57.910897 #18564] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.3ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-08T11:39:57.912453 #18564]  INFO -- : Processing by Duckrails::HomeController#index as HTML
+I, [2018-02-08T11:39:57.928432 #18564]  INFO -- :   Rendered duckrails/home/index.html.erb within layouts/application (8.4ms)
+I, [2018-02-08T11:39:57.938946 #18564]  INFO -- :   Rendered shared/_header.html.erb (1.1ms)
+I, [2018-02-08T11:39:57.940538 #18564]  INFO -- :   Rendered shared/_footer.html.erb (0.5ms)
+I, [2018-02-08T11:39:57.940800 #18564]  INFO -- : Completed 200 OK in 28ms (Views: 28.0ms | ActiveRecord: 0.0ms)
+I, [2018-02-08T11:40:00.494704 #18564]  INFO -- : Started GET "/duckrails/mocks" for 127.0.0.1 at 2018-02-08 11:40:00 +0530
+D, [2018-02-08T11:40:00.495820 #18564] DEBUG -- :   [1m[35mDuckrails::ApplicationState Load (0.3ms)[0m  SELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1
+I, [2018-02-08T11:40:00.497187 #18564]  INFO -- : Processing by Duckrails::MocksController#index as HTML
+D, [2018-02-08T11:40:00.509387 #18564] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.3ms)[0m  [1mSELECT  "mocks".* FROM "mocks"  ORDER BY "mocks"."mock_order" ASC LIMIT 10 OFFSET 0[0m
+I, [2018-02-08T11:40:00.514525 #18564]  INFO -- :   Rendered duckrails/mocks/index.html.erb within layouts/application (11.5ms)
+I, [2018-02-08T11:40:00.516059 #18564]  INFO -- :   Rendered shared/_header.html.erb (0.6ms)
+I, [2018-02-08T11:40:00.516321 #18564]  INFO -- :   Rendered shared/_footer.html.erb (0.0ms)
+I, [2018-02-08T11:40:00.516591 #18564]  INFO -- : Completed 200 OK in 19ms (Views: 17.9ms | ActiveRecord: 0.3ms)
+I, [2018-02-08T11:40:05.314026 #18564]  INFO -- : Started DELETE "/duckrails/mocks/1" for 127.0.0.1 at 2018-02-08 11:40:05 +0530
+D, [2018-02-08T11:40:05.315402 #18564] DEBUG -- :   [1m[35mDuckrails::ApplicationState Load (0.3ms)[0m  SELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1
+I, [2018-02-08T11:40:05.316280 #18564]  INFO -- : Processing by Duckrails::MocksController#destroy as HTML
+I, [2018-02-08T11:40:05.316438 #18564]  INFO -- :   Parameters: {"authenticity_token"=>"FE1JDHX7kbSbV7wiZlMgwP3+XVjc8/xxHEzEPhknR143cODf0fKOSv1+tb2YByMIVVp8JVWISL9D6IWdmi/siQ==", "id"=>"1"}
+D, [2018-02-08T11:40:05.317878 #18564] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.2ms)[0m  [1mSELECT  "mocks".* FROM "mocks" WHERE "mocks"."id" = $1  ORDER BY "mocks"."mock_order" ASC LIMIT 1[0m  [["id", 1]]
+D, [2018-02-08T11:40:05.319749 #18564] DEBUG -- :   [1m[35mSQL (0.8ms)[0m  DELETE FROM "mocks" WHERE "mocks"."id" = $1  [["id", 1]]
+D, [2018-02-08T11:40:05.320914 #18564] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.3ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+D, [2018-02-08T11:40:05.321594 #18564] DEBUG -- :   [1m[35m (0.1ms)[0m  BEGIN
+D, [2018-02-08T11:40:05.324816 #18564] DEBUG -- :   [1m[36mSQL (0.3ms)[0m  [1mUPDATE "application_state" SET "mock_synchronization_token" = $1, "updated_at" = $2 WHERE "application_state"."id" = $3[0m  [["mock_synchronization_token", "e5cbd786-0872-4e0d-bddd-a485a787d996"], ["updated_at", "2018-02-08 06:10:05.322011"], ["id", 1]]
+D, [2018-02-08T11:40:05.326150 #18564] DEBUG -- :   [1m[35m (0.4ms)[0m  COMMIT
+I, [2018-02-08T11:40:05.326868 #18564]  INFO -- : Redirected to http://localhost:9292/duckrails/mocks
+I, [2018-02-08T11:40:05.334788 #18564]  INFO -- : Completed 302 Found in 18ms (ActiveRecord: 2.1ms)
+I, [2018-02-08T11:40:05.341264 #18564]  INFO -- : Started GET "/duckrails/mocks" for 127.0.0.1 at 2018-02-08 11:40:05 +0530
+D, [2018-02-08T11:40:05.342181 #18564] DEBUG -- :   [1m[36mDuckrails::ApplicationState Load (0.3ms)[0m  [1mSELECT  "application_state".* FROM "application_state"  ORDER BY "application_state"."id" DESC LIMIT 1[0m
+I, [2018-02-08T11:40:05.342789 #18564]  INFO -- : Mock synchronization token missmatch. Syncronizing...
+D, [2018-02-08T11:40:05.343424 #18564] DEBUG -- :   [1m[35m (0.2ms)[0m  SELECT "mocks"."id" FROM "mocks"  ORDER BY "mocks"."mock_order" ASC
+I, [2018-02-08T11:40:05.349922 #18564]  INFO -- : Mock synchronization completed.
+I, [2018-02-08T11:40:05.352109 #18564]  INFO -- : Processing by Duckrails::MocksController#index as HTML
+D, [2018-02-08T11:40:05.353859 #18564] DEBUG -- :   [1m[36mDuckrails::Mock Load (0.3ms)[0m  [1mSELECT  "mocks".* FROM "mocks"  ORDER BY "mocks"."mock_order" ASC LIMIT 10 OFFSET 0[0m
+I, [2018-02-08T11:40:05.354464 #18564]  INFO -- :   Rendered duckrails/mocks/index.html.erb within layouts/application (1.5ms)
+I, [2018-02-08T11:40:05.355987 #18564]  INFO -- :   Rendered shared/_header.html.erb (0.6ms)
+I, [2018-02-08T11:40:05.356220 #18564]  INFO -- :   Rendered shared/_footer.html.erb (0.0ms)
+I, [2018-02-08T11:40:05.356478 #18564]  INFO -- : Completed 200 OK in 4ms (Views: 3.4ms | ActiveRecord: 0.3ms)
